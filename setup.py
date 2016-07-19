@@ -9,10 +9,11 @@ config = {
     'url': 'https://github.com/rickerbh/tictactoe_py',
     'author_email': 'hamish@simplemachines.com.au',
     'version': '0.1',
-    'install_requires': ['nose'],
+    'install_requires': ['nose', 'nosy'],
     'packages': ['tictactoe'],
     'scripts': [],
-    'name': 'tictactoe'
+    'name': 'tictactoe',
+    'test_suite': 'nose.collector'
 }
 
 setup(**config)
