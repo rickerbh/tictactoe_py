@@ -89,3 +89,31 @@ def reset_game_test():
     board.reset()
     current_state = board.game_state
     assert_equal(["", "", "", "", "", "", "", "", ""], current_state)
+
+def game_is_draw_test():
+    board = GameBoard()
+    board.play_move("X", 0)
+    board.play_move("O", 4)
+    board.play_move("X", 2)
+    board.play_move("O", 1)
+    board.play_move("X", 6)
+    board.play_move("O", 3)
+    board.play_move("X", 5)
+    board.play_move("O", 8)
+    assert_equal(False, board.is_draw())
+    board.play_move("X", 7)
+    assert_equal(True, board.is_draw())
+
+def won_games_arent_drawn_test():
+    board = GameBoard()
+    board.play_move("X", 0)
+    board.play_move("O", 3)
+    board.play_move("X", 1)
+    board.play_move("O", 6)
+    board.play_move("X", 5)
+    board.play_move("O", 4)
+    board.play_move("X", 8)
+    board.play_move("O", 7)
+    board.play_move("X", 2)
+    assert_equal(True, board.has_winner())
+    assert_equal(False, board.is_draw())

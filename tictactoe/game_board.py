@@ -63,3 +63,12 @@ class GameBoard():
 
     def reset(self):
         self._board = ["", "", "", "", "", "", "", "", ""]
+
+    def is_draw(self):
+        def is_not_empty(item):
+            return not item == ""
+        
+        if self.has_winner():
+            return False
+        return len(list(filter(is_not_empty, self._board))) == len(self._board)
+    
