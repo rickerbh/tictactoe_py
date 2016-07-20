@@ -82,3 +82,10 @@ def game_raises_exception_when_making_a_move_and_the_game_is_won_test():
         ex1 = ex
 
     assert_equal('Game is over', ex1.args[0])
+
+def reset_game_test():
+    board = GameBoard()
+    board.play_move("X", 0)
+    board.reset()
+    current_state = board.game_state
+    assert_equal(["", "", "", "", "", "", "", "", ""], current_state)

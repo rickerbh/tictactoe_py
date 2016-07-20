@@ -1,6 +1,7 @@
 class GameBoard():
     def __init__(self):
-        self._board = ["", "", "", "", "", "", "", "", ""]
+        self._board = None
+        self.reset()
 
     @property
     def game_state(self):
@@ -59,3 +60,6 @@ class GameBoard():
     @property
     def _diagonals(self):
         return [[self._board[i] for i in [0, 4, 8]], [self._board[i] for i in [2, 4, 6]]]
+
+    def reset(self):
+        self._board = ["", "", "", "", "", "", "", "", ""]
