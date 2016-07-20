@@ -70,8 +70,7 @@ def game_is_won_on_a_diagonal_test():
     board.play_move("X", 6)
     assert_equal(True, board.has_winner())
 
-    
-def game_raises_exception_when_making_a_move_and_the_game_is_won():
+def game_raises_exception_when_making_a_move_and_the_game_is_won_test():
     board = GameBoard()
     board.play_move("X", 3)
     board.play_move("X", 4)
