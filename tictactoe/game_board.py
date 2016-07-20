@@ -23,7 +23,7 @@ class GameBoard():
         return self.game_state[position] == ""
 
     def has_winner(self):
-        return any([self._row_check(), self._column_check()])
+        return any([self._row_check(), self._column_check(), self._diagonal_check()])
 
     def _row_check(self):
         return self.check_items(self._rows)
@@ -53,6 +53,9 @@ class GameBoard():
     def _column(self, number):
         return [self._board[i] for i in [number, number + 3, number + 6]]
 
-    def winner(self):
-    # get rows, test if all same, if so, return first item from matching array
-        return None
+    def _diagonal_check(self):
+        return self.check_items(self._diagonals)
+    
+    @property
+    def _diagonals(self):
+        return [[self._board[i] for i in [0, 4, 8]], [self._board[i] for i in [2, 4, 6]]]

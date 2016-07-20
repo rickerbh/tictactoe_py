@@ -46,13 +46,40 @@ def game_board_raises_exception_when_playing_a_position_already_played_test():
 def game_is_won_on_a_row_test():
     board = GameBoard()
     board.play_move("X", 3)
-    assert_equal(None, board.winner())
+    assert_equal(False, board.has_winner())
     board.play_move("X", 4)
-    assert_equal(None, board.winner())
+    assert_equal(False, board.has_winner())
     board.play_move("X", 5)
     assert_equal(True, board.has_winner())
-    assert_equal("X", board.winner())
 
+def game_is_won_on_a_column_test():
+    board = GameBoard()
+    board.play_move("X", 1)
+    assert_equal(False, board.has_winner())
+    board.play_move("X", 4)
+    assert_equal(False, board.has_winner())
+    board.play_move("X", 7)
+    assert_equal(True, board.has_winner())
+
+def game_is_won_on_a_diagonal_test():
+    board = GameBoard()
+    board.play_move("X", 2)
+    assert_equal(False, board.has_winner())
+    board.play_move("X", 4)
+    assert_equal(False, board.has_winner())
+    board.play_move("X", 6)
+    assert_equal(True, board.has_winner())
+
+    
 def game_raises_exception_when_making_a_move_and_the_game_is_won():
-    assert_equal(False, "Complete me")
- 
+    board = GameBoard()
+    board.play_move("X", 3)
+    board.play_move("X", 4)
+    board.play_move("X", 5)
+    ex1 = None
+    try:
+        board.play_move("X", 0)
+    except ValueError as ex:
+        ex1 = ex
+
+    assert_equal('Game is over', ex1.args[0])
