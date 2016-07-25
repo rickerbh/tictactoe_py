@@ -3,14 +3,14 @@ from tictactoe.game_board import GameBoard
 
 def game_board_is_empty_on_creation_test():
     board = GameBoard()
-    current_state = board.game_state
-    assert_equal(["", "", "", "", "", "", "", "", ""], current_state)
+    current_positions = board.positions
+    assert_equal(["", "", "", "", "", "", "", "", ""], current_positions)
 
 def game_board_registers_initial_move_test():
     board = GameBoard()
     board.play_move("X", 3)
-    current_state = board.game_state
-    assert_equal(["", "", "", "X", "", "", "", "", ""], current_state)
+    current_positions = board.positions
+    assert_equal(["", "", "", "X", "", "", "", "", ""], current_positions)
 
 def game_board_raises_exception_when_playing_invalid_positions_test():
     board = GameBoard()
@@ -87,7 +87,7 @@ def reset_game_test():
     board = GameBoard()
     board.play_move("X", 0)
     board.reset()
-    current_state = board.game_state
+    current_state = board.positions
     assert_equal(["", "", "", "", "", "", "", "", ""], current_state)
 
 def game_is_draw_test():

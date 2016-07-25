@@ -4,7 +4,7 @@ class GameBoard():
         self.reset()
 
     @property
-    def game_state(self):
+    def positions(self):
         return self._board
 
     def play_move(self, player, position):
@@ -15,13 +15,13 @@ class GameBoard():
         if self.has_winner():
             raise ValueError("Game is over")
         
-        self._board[position] = player
+        self.positions[position] = player
 
     def _is_position_valid(self, position):
-        return position >= 0 and position < len(self.game_state)
+        return position >= 0 and position < len(self.positions)
         
     def _is_position_open(self, position):
-        return self.game_state[position] == ""
+        return self.positions[position] == ""
 
     def has_winner(self):
         return any([self._row_check(), self._column_check(), self._diagonal_check()])
@@ -35,7 +35,7 @@ class GameBoard():
     
     def _row(self, number):
         start_cell = number * 3
-        return self._board[start_cell:start_cell + 3] 
+        return self.positions[start_cell:start_cell + 3] 
 
     def check_items(self, items):
         checked_items = map(self._all_same, items)
@@ -59,7 +59,7 @@ class GameBoard():
     
     @property
     def _diagonals(self):
-        return [[self._board[i] for i in [0, 4, 8]], [self._board[i] for i in [2, 4, 6]]]
+        return [[self.positions[i] for i in [0, 4, 8]], [self.positions[i] for i in [2, 4, 6]]]
 
     def reset(self):
         self._board = ["", "", "", "", "", "", "", "", ""]
@@ -70,5 +70,5 @@ class GameBoard():
         
         if self.has_winner():
             return False
-        return len(list(filter(is_not_empty, self._board))) == len(self._board)
+        return len(list(filter(is_not_empty, self.positions))) == len(self.positions)
     
