@@ -27,8 +27,3 @@ class AIPlayer():
         elif any(board.center):
             return self._random_corner()
 
-    # have a responding ai move. Need to determine if it should go in corner or center.
-
-    # then, have a function that determines if there is an opportunity for the player (or AI) to win, and take it.
-
-    # All these should be in an external class
