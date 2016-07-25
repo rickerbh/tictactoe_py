@@ -1,8 +1,8 @@
 import random
 
 class AIPlayer():
-    def __init__(self):
-        pass
+    def __init__(self, symbol):
+        self._symbol = symbol
 
     def best_move(self, board):
         def is_empty(item): # TODO: Refactor as this is duplicated in game_board and game_controller_tests
@@ -12,7 +12,7 @@ class AIPlayer():
         moves = len(list(filter(is_empty, positions)))
         if moves == len(positions):
             return self._make_opening_ai_move()
-        elif moves == 8:
+        elif moves == len(positions) - 1:
             return self._make_responding_ai_move(board)
 
     def _make_opening_ai_move(self):
