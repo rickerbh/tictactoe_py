@@ -12,8 +12,6 @@ class GameBoard():
             raise ValueError("{0} is not a valid board position".format(position))
         if not self._is_position_open(position):
             raise ValueError("{0} is already taken".format(position))
-        if self.has_winner():
-            raise ValueError("Game is over")
         
         self.positions[position] = player
 
@@ -22,9 +20,6 @@ class GameBoard():
         
     def _is_position_open(self, position):
         return self.positions[position] == ""
-
-    def has_winner(self):
-        return any([self._row_check(), self._column_check(), self._diagonal_check()])
 
     def _row_check(self):
         return self.check_items(self._rows)
@@ -64,11 +59,3 @@ class GameBoard():
     def reset(self):
         self._board = ["", "", "", "", "", "", "", "", ""]
 
-    def is_draw(self):
-        def is_not_empty(item):
-            return not item == ""
-        
-        if self.has_winner():
-            return False
-        return len(list(filter(is_not_empty, self.positions))) == len(self.positions)
-    
