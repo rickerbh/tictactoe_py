@@ -32,25 +32,28 @@ class GameBoard():
     @property
     def _columns(self):
         return list(map(self._column, list(range(3))))
-    
-    def _column(self, number):
-        return [self._board[i] for i in [number, number + 3, number + 6]]
 
+    def _column(self, number):
+        return self._get_cells([number, number + 3, number + 6])
+
+    def _get_cells(self, cells):
+        return [self.positions[i] for i in cells]
+    
     @property
     def _diagonals(self):
-        return [[self.positions[i] for i in [0, 4, 8]], [self.positions[i] for i in [2, 4, 6]]]
+        return [self._get_cells([0, 4, 8]), self._get_cells([2, 4, 6])]
 
     def reset(self):
         self._board = ["", "", "", "", "", "", "", "", ""]
 
     @property
     def edges(self):
-        return [self.positions[i] for i in [1, 3, 5, 7]]
+        return self._get_cells([1, 3, 5, 7])
 
     @property
     def corners(self):
-        return [self.positions[i] for i in [0, 2, 6, 8]]
+        return self._get_cells([0, 2, 6, 8])
 
     @property
     def center(self):
-        return [self.positions[4]]
+        return self._get_cells([4])
