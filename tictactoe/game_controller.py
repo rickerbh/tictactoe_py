@@ -17,5 +17,5 @@ class GameController():
         
     def make_ai_move(self):
         symbol = self._ai_symbol()
-        position = self._ai_player.best_move(self._board.positions)
+        position = self._ai_player.best_move(self._board)
         self._play(symbol, position)
