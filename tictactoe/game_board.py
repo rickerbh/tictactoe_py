@@ -59,3 +59,14 @@ class GameBoard():
     def reset(self):
         self._board = ["", "", "", "", "", "", "", "", ""]
 
+    @property
+    def edges(self):
+        return [self.positions[i] for i in [1, 3, 5, 7]]
+
+    @property
+    def corners(self):
+        return [self.positions[i] for i in [0, 2, 6, 8]]
+
+    @property
+    def center(self):
+        return [self.positions[4]]

@@ -50,3 +50,25 @@ def reset_game_test():
     current_state = board.positions
     assert_equal(["", "", "", "", "", "", "", "", ""], current_state)
 
+def edges_test():
+    board = GameBoard()
+    board.play_move("1", 1)
+    board.play_move("2", 3)
+    board.play_move("3", 5)
+    board.play_move("4", 7)
+    assert_equal(["1", "2", "3", "4"], board.edges)
+
+def corners_test():
+    board = GameBoard()
+    board.play_move("1", 0)
+    board.play_move("2", 2)
+    board.play_move("3", 6)
+    board.play_move("4", 8)
+    assert_equal(["1", "2", "3", "4"], board.corners)
+
+def center_test():
+    board = GameBoard()
+    board.play_move("1", 4)
+    assert_equal(["1"], board.center)
+
+    
