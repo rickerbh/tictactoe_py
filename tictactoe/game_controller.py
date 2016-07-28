@@ -7,7 +7,7 @@ class GameController():
     def __init__(self, symbol):
         self._board = GameBoard()
         self._player_symbol = symbol
-        self._ai_player = AIPlayer(self._ai_symbol)
+        self._ai_player = AIPlayer(self._ai_symbol, symbol)
 
     def _ai_symbol(self):
         if self._player_symbol == "X":
