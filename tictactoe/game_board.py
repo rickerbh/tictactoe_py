@@ -22,7 +22,7 @@ class GameBoard():
         return self.positions[position] == ""
 
     @property
-    def _rows(self):
+    def rows(self):
         return list(map(self._row, list(range(3))))
     
     def _row(self, number):
@@ -30,7 +30,7 @@ class GameBoard():
         return self.positions[start_cell:start_cell + 3] 
 
     @property
-    def _columns(self):
+    def columns(self):
         return list(map(self._column, list(range(3))))
 
     def _column(self, number):
@@ -40,7 +40,7 @@ class GameBoard():
         return [self.positions[i] for i in cells]
     
     @property
-    def _diagonals(self):
+    def diagonals(self):
         return [self._get_cells([0, 4, 8]), self._get_cells([2, 4, 6])]
 
     def reset(self):

@@ -18,7 +18,7 @@ class GameState():
                     self._diagonal_check()])
 
     def _row_check(self):
-        return self.check_items(self._board._rows)
+        return self.check_items(self._board.rows)
     
     def check_items(self, items):
         checked_items = map(self._all_same, items)
@@ -28,8 +28,8 @@ class GameState():
         return len(set(items)) == 1 and not items[0] == ""
 
     def _column_check(self):
-        return self.check_items(self._board._columns)
+        return self.check_items(self._board.columns)
     
     def _diagonal_check(self):
-        return self.check_items(self._board._diagonals)
+        return self.check_items(self._board.diagonals)
     
