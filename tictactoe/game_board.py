@@ -9,13 +9,13 @@ class GameBoard():
     def positions(self):
         return self._board
 
-    def play_move(self, player, position):
+    def play_move(self, symbol, position):
         if not self._is_position_valid(position):
             raise ValueError("{0} is not a valid board position".format(position))
         if not self._is_position_open(position):
             raise ValueError("{0} is already taken".format(position))
         
-        self.positions[position] = player
+        self.positions[position] = symbol
 
     def _is_position_valid(self, position):
         return position >= 0 and position < len(self.positions)
@@ -59,6 +59,10 @@ class GameBoard():
     @property
     def center(self):
         return self._get_cells([4])
+
+    @property
+    def center_position(self):
+        return 4
 
     @property
     def corner_positions(self):

@@ -34,7 +34,7 @@ class AIPlayer():
     
     def _make_responding_ai_move(self, board):
         if any(board.corners) or any(board.edges):
-            return 4
+            return board.center_position
         elif any(board.center):
             return board.random_corner
 
