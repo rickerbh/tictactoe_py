@@ -71,4 +71,9 @@ def center_test():
     board.play_move("1", 4)
     assert_equal(["1"], board.center)
 
+def center_position_test():
+    assert_equal(4, GameBoard().center_position)
+
+def corner_positions_test():
+    assert_equal([0, 2, 6, 8], GameBoard().corner_positions)
     
