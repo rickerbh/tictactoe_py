@@ -1,5 +1,6 @@
-from collections import Counter
+import functools
 import random
+from tictactoe.game_state import GameState
 
 class AIPlayer():
     def __init__(self, symbol, other_symbol):
@@ -12,94 +13,60 @@ class AIPlayer():
 
         positions = board.positions
         moves = len(list(filter(is_empty, positions)))
+        
         if moves == len(positions):
-            return self._make_opening_ai_move()
+            return self._make_opening_ai_move(board)
         elif moves == len(positions) - 1:
             return self._make_responding_ai_move(board)
-        elif self.win_available(board):
+        elif board.win_available(self._symbol):
             return self.take_win(board)
-        elif self.loss_available(board):
+        elif board.win_available(self._other_symbol):
             return self.block_loss(board);
         elif self.should_take_opposite_corner(board):
             return self.take_opposite_corner(board)
-        elif self.corner_available(board):
+        elif state.corner_available(board):
             return self.take_corner(board)
-        elif self.edge_available(board):
+        elif state.edge_available(board):
             return self.take_edge(board)
 
-    def _make_opening_ai_move(self):
-        return self._random_corner()
-    
-    def _random_corner(self):
-        return random.choice([0, 2, 6, 8])
+    def _make_opening_ai_move(self, board):
+        return board.random_corner
     
     def _make_responding_ai_move(self, board):
         if any(board.corners) or any(board.edges):
             return 4
         elif any(board.center):
-            return self._random_corner()
-
-    def win_available(self, board):
-        winnables = board.rows + board.columns + board.diagonals
-        return any(map(self.is_winnable, winnables))
-
-    def is_winnable(self, items):
-        return self.nearly_won_check(self._symbol, items)
-    
-    def nearly_won_check(self, symbol, items):
-        freqs = Counter(items)
-        return freqs[symbol] == 2 and freqs[""] == 1
+            return board.random_corner
 
     def take_win(self, board):
+        is_winnable = functools.partial(GameState(board).is_winnable, self._symbol)
+        return self.complete_row(board, is_winnable)
+        
+    def complete_row(self, board, take_determinator):
         offset = 0
         for items in board.rows:
-            if self.is_winnable(items):
+            if take_determinator(items):
                 return items.index("") + offset
             offset = offset + 3
 
         offset = 0
         for items in board.columns:
-            if self.is_winnable(items):
+            if take_determinator(items):
                 return items.index("") * 3 + offset
             offset = offset + 1
 
         diagonal = 0
         for items in board.diagonals:
-            if self.is_winnable(items):
+            if take_determinator(items):
                 if diagonal == 0:
                     return items.index("") * 4
                 else:
                     return items.index("") * 2 + 2
-            diagonal = 1
-
-    def loss_available(self, board):
-        loseables = board.rows + board.columns + board.diagonals
-        return any(map(self.is_loseable, loseables))
-
-    def is_loseable(self, items):
-        return self.nearly_won_check(self._other_symbol, items)
-
+            diagonal = 1       
+    
     def block_loss(self, board):
-        offset = 0
-        for items in board.rows:
-            if self.is_loseable(items):
-                return items.index("") + offset
-            offset = offset + 3
-
-        offset = 0
-        for items in board.columns:
-            if self.is_loseable(items):
-                return items.index("") * 3 + offset
-            offset = offset + 1
-
-        diagonal = 0
-        for items in board.diagonals:
-            if self.is_loseable(items):
-                if diagonal == 0:
-                    return items.index("") * 4
-                else:
-                    return items.index("") * 2 + 2
-            diagonal = 1
+        is_loseable = functools.partial(GameState(board).is_winnable, self._other_symbol)
+        return self.complete_row(board, is_loseable)
 
     def should_take_opposite_corner(self, board):
         for items in board.diagonals:
@@ -122,14 +89,8 @@ class AIPlayer():
                     return 2
             diagonal = 1
 
-    def corner_available(self, board):
-        return "" in board.corners
-
     def take_corner(self, board):
         return board.corners.index("") * (board.corners.index("") + 1)
-
-    def edge_available(self, board):
-        return "" in board.edges
 
     def take_edge(self, board):
         return board.edges.index("") * 2 + 1

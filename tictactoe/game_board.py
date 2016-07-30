@@ -1,3 +1,5 @@
+import random
+
 class GameBoard():
     def __init__(self):
         self._board = None
@@ -52,8 +54,21 @@ class GameBoard():
 
     @property
     def corners(self):
-        return self._get_cells([0, 2, 6, 8])
+        return self._get_cells(self.corner_positions)
 
     @property
     def center(self):
         return self._get_cells([4])
+
+    @property
+    def corner_positions(self):
+        return [0, 2, 6, 8]
+
+    @property
+    def all_winnables(self):
+        return self.rows + self.columns + self.diagonals
+
+    @property
+    def random_corner(self):
+        return random.choice(self.corner_positions)
+    

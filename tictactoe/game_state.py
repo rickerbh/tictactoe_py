@@ -1,4 +1,6 @@
 from tictactoe.game_board import GameBoard
+from collections import Counter
+import functools
 
 class GameState():
     def __init__(self, board):
@@ -32,4 +34,22 @@ class GameState():
     
     def _diagonal_check(self):
         return self.check_items(self._board.diagonals)
+
+    def corner_available(self):
+        return "" in self._board.corners
+
+    def edge_available(self):
+        return "" in self._board.edges
+
+    def nearly_won_check(self, symbol, items):
+        freqs = Counter(items)
+        return freqs[symbol] == 2 and freqs[""] == 1
+
+    def win_available(self, symbol):
+        winnables = self._board.all_winnables
+        win_determinator = functools.partial(self.is_winnable, symbol)
+        return any(map(win_determinator, winnables))
+
+    def is_winnable(self, symbol, items):
+        return self.nearly_won_check(symbol, items)
     
