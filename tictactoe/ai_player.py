@@ -21,7 +21,7 @@ class AIPlayer():
         elif board.win_available(self._symbol):
             return self.take_win(board)
         elif board.win_available(self._other_symbol):
-            return self.block_loss(board);
+            return self.block_loss(board)
         elif self.should_take_opposite_corner(board):
             return self.take_opposite_corner(board)
         elif state.corner_available(board):
@@ -70,7 +70,7 @@ class AIPlayer():
 
     def should_take_opposite_corner(self, board):
         for items in board.diagonals:
-            if items[0] == self._other_symbol and items[2] == "" or items[2] == self._other_symbol == items[0] == "":
+            if items[0] == self._other_symbol and items[2] == "" or items[2] == self._other_symbol and items[0] == "":
                 return True
         return False
 
@@ -83,7 +83,7 @@ class AIPlayer():
                 else:
                     return 6
             elif items[2] == self._other_symbol and items[0] == "":
-                if diagonal == 1:
+                if diagonal == 0:
                     return 0
                 else:
                     return 2

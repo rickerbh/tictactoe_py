@@ -2,6 +2,7 @@ from nose.tools import *
 from tictactoe.ai_player import AIPlayer
 from tictactoe.game_board import GameBoard
 import functools
+import itertools
 
 def ai_player_makes_best_opening_move_test():
     ai = AIPlayer("X", "O")
@@ -15,11 +16,12 @@ def _o_finder(accum, item):
     return item == "O"
 
 def ai_player_responds_to_opening_corner_test():
-    board = GameBoard()
-    board.play_move("X", 0)
-    ai = AIPlayer("O", "X")
-    result = ai._make_responding_ai_move(board)
-    assert_equal(4, result)
+    for move in GameBoard().corner_positions:
+        board = GameBoard()
+        board.play_move("X", move)
+        ai = AIPlayer("O", "X")
+        result = ai._make_responding_ai_move(board)
+        assert_equal(4, result)
     
 def ai_player_responds_to_opening_edge_test():
     board = GameBoard()
@@ -37,82 +39,101 @@ def ai_player_responds_to_opening_center_test():
     assert_equal(True, result in [0, 2, 6, 8])
     
 def ai_player_takes_win_if_available_in_row_test():
-    board = GameBoard()
-    board.play_move("X", 3)
-    board.play_move("X", 5)
-    ai = AIPlayer("X", "O")
-    assert_equal(4, ai.take_win(board))
+    for row in [[0, 1, 2], [3, 4, 5], [6, 7, 8]]:
+        permutations = itertools.permutations(row)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("X", option[0])
+            board.play_move("X", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.take_win(board))
     
 def ai_player_takes_win_if_available_in_column_test():
-    board = GameBoard()
-    board.play_move("X", 2)
-    board.play_move("X", 8)
-    ai = AIPlayer("X", "O")
-    assert_equal(5, ai.take_win(board))
+    for column in [[0, 3, 6], [1, 4, 7], [2, 5, 8]]:
+        permutations = itertools.permutations(column)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("X", option[0])
+            board.play_move("X", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.take_win(board))
 
 def ai_player_takes_win_if_available_in_diagonal_test():
-    board = GameBoard()
-    board.play_move("X", 4)
-    board.play_move("X", 6)
-    ai = AIPlayer("X", "O")
-    assert_equal(2, ai.take_win(board))
+    for diagonal in [[0, 4, 8], [2, 4, 6]]:
+        permutations = itertools.permutations(diagonal)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("X", option[0])
+            board.play_move("X", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.take_win(board))
 
 def ai_player_block_loss_if_available_in_row_test():
-    board = GameBoard()
-    board.play_move("O", 3)
-    board.play_move("O", 5)
-    ai = AIPlayer("X", "O")
-    assert_equal(4, ai.block_loss(board))
+    for row in [[0, 1, 2], [3, 4, 5], [6, 7, 8]]:
+        permutations = itertools.permutations(row)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("O", option[0])
+            board.play_move("O", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.block_loss(board))
     
 def ai_player_block_loss_if_available_in_column_test():
-    board = GameBoard()
-    board.play_move("O", 2)
-    board.play_move("O", 8)
-    ai = AIPlayer("X", "O")
-    assert_equal(5, ai.block_loss(board))
+    for column in [[0, 3, 6], [1, 4, 7], [2, 5, 8]]:
+        permutations = itertools.permutations(column)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("O", option[0])
+            board.play_move("O", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.block_loss(board))
 
 def ai_player_block_loss_if_available_in_diagonal_test():
-    board = GameBoard()
-    board.play_move("O", 4)
-    board.play_move("O", 2)
-    ai = AIPlayer("X", "O")
-    assert_equal(6, ai.block_loss(board))
+    for diagonal in [[0, 4, 8], [2, 4, 6]]:
+        permutations = itertools.permutations(diagonal)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("O", option[0])
+            board.play_move("O", option[1])
+            ai = AIPlayer("X", "O")
+            assert_equal(option[2], ai.block_loss(board))
 
 def ai_player_should_play_in_opposite_corner_test():
-    board = GameBoard()
-    board.play_move("O", 0)
-    board.play_move("X", 4)
-    ai = AIPlayer("X", "O")
-    assert_equal(True, ai.should_take_opposite_corner(board))
+    for corner in GameBoard().corner_positions:
+        board = GameBoard()
+        board.play_move("X", board.center_position)
+        board.play_move("O", corner)
+        ai = AIPlayer("X", "O")
+        print("Placed in {0}".format(corner))
+        assert_equal(True, ai.should_take_opposite_corner(board))
 
 def ai_player_should_take_opposite_corner_test():
-    board = GameBoard()
-    board.play_move("O", 0)
-    board.play_move("X", 4)
-    ai = AIPlayer("X", "O")
-    assert_equal(8, ai.take_opposite_corner(board))
+    for corner in [[0, 8], [2, 6]]:
+        permutations = itertools.permutations(corner)
+        for option in permutations:
+            board = GameBoard()
+            board.play_move("O", option[0])
+            board.play_move("X", 4)
+            ai = AIPlayer("X", "O")
+            assert_equal(option[1], ai.take_opposite_corner(board))
 
-def ai_player_should_take_other_opposite_corner_test():
-    board = GameBoard()
-    board.play_move("O", 2)
-    board.play_move("X", 4)
-    ai = AIPlayer("X", "O")
-    assert_equal(6, ai.take_opposite_corner(board))
+def ai_player_take_corner_test():
+    for corner in GameBoard().corner_positions:
+        board = GameBoard()
+        board.play_move("X", corner)
+        board.play_move("O", 4)
+        ai = AIPlayer("X", "O")
+        move = ai.take_corner(board)
+        result = move in GameBoard().corner_positions
+        assert_equal(True, result)
 
-def ai_player_should_take_corner_test():
-    board = GameBoard()
-    board.play_move("X", 0)
-    board.play_move("O", 4)
-    ai = AIPlayer("X", "O")
-    move = ai.take_corner(board)
-    result = move == 2 or move == 6 or move == 8
-    assert_equal(True, result)
-
-def ai_player_should_take_edge_test():
-    board = GameBoard()
-    board.play_move("X", 1)
-    board.play_move("O", 5)
-    ai = AIPlayer("X", "O")
-    move = ai.take_edge(board)
-    result = move == 7 or move == 3
-    assert_equal(True, result)
+def ai_player_take_edge_test():
+    permutations = itertools.permutations(GameBoard().edge_positions)
+    for option in permutations:
+        board = GameBoard()
+        board.play_move("O", option[0])
+        board.play_move("X", option[1])
+        board.play_move("O", option[2])
+        ai = AIPlayer("X", "O")
+        move = ai.take_edge(board)
+        assert_equal(move, option[3])
