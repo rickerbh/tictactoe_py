@@ -1,8 +1,9 @@
 import functools
 import random
 from tictactoe.ai_strategy import AIStrategy
+from tictactoe.player import Player
 
-class AIPlayer():
+class AIPlayer(Player):
     def __init__(self, symbol, other_symbol):
         self._symbol = symbol
         self._other_symbol = other_symbol
