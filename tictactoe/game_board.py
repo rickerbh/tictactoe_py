@@ -75,4 +75,7 @@ class GameBoard():
     @property
     def random_corner(self):
         return random.choice(self.corner_positions)
-    
+
+    @property
+    def edge_positions(self):
+        return [1, 3, 5, 7]

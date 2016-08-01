@@ -76,4 +76,6 @@ def center_position_test():
 
 def corner_positions_test():
     assert_equal([0, 2, 6, 8], GameBoard().corner_positions)
-    
+
+def edge_positions_test():
+    assert_equal([1, 3, 5, 7], GameBoard().edge_positions)

@@ -23,14 +23,15 @@ def ai_player_responds_to_opening_corner_test():
     
 def ai_player_responds_to_opening_edge_test():
     board = GameBoard()
-    board.play_move("X", 1)
-    ai = AIPlayer("O", "X")
-    result = ai._make_responding_ai_move(board)
-    assert_equal(4, result)
+    for move in board.edge_positions:
+        board.play_move("X", move)
+        ai = AIPlayer("O", "X")
+        result = ai._make_responding_ai_move(board)
+        assert_equal(4, result)
 
 def ai_player_responds_to_opening_center_test():
     board = GameBoard()
-    board.play_move("X", 4)
+    board.play_move("X", board.center_position)
     ai = AIPlayer("O", "X")
     result = ai._make_responding_ai_move(board)
     assert_equal(True, result in [0, 2, 6, 8])
