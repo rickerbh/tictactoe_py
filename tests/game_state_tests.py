@@ -122,3 +122,10 @@ def diagonal_win_success_test():
 def random_corner_test():
     result = GameBoard().random_corner
     assert_equal(True, result in [0, 2, 6, 8])
+
+def block_fork_opportunity_test():
+    board = GameBoard()
+    board.play_move("X", 0)
+    board.play_move("X", 8)
+    board.play_move("O", 4)
+    assert_equal(True, GameState(board).block_fork_opportunity("O"))

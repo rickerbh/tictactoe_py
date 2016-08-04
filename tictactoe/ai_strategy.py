@@ -7,17 +7,20 @@ class AIStrategy():
         self._other_symbol = other_symbol
     
     def make_move(self, board):
-        def is_empty(item): # TODO: Refactor as this is duplicated in game_board and game_controller_tests
+        def is_empty(item):
             return item == ""
 
         positions = board.positions
         moves = len(list(filter(is_empty, positions)))
+        state = GameState(board)
         
         if moves == len(positions):
             return self._make_opening_ai_move(board)
         elif moves == len(positions) - 1:
             return self._make_responding_ai_move(board)
-        elif board.win_available(self._symbol):
+        elif moves == len(positions) - 3 and state.block_fork_opportunity(self._symbol):
+            return self.take_edge(board)
+        elif state.win_available(self._symbol):
             return self.take_win(board)
         elif board.win_available(self._other_symbol):
             return self.block_loss(board)

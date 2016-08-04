@@ -53,3 +53,8 @@ class GameState():
     def is_winnable(self, symbol, items):
         return self.nearly_won_check(symbol, items)
     
+    def block_fork_opportunity(self, symbol):
+        if self._board.center[0] == symbol:
+            other_symbol_filter = lambda x: x != "" and x != symbol
+            return 2 == len(list(filter(other_symbol_filter, self._board.corners)))
+        return False
