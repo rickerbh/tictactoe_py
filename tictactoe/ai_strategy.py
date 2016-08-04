@@ -22,13 +22,13 @@ class AIStrategy():
             return self.take_edge(board)
         elif state.win_available(self._symbol):
             return self.take_win(board)
-        elif board.win_available(self._other_symbol):
+        elif state.win_available(self._other_symbol):
             return self.block_loss(board)
         elif self.should_take_opposite_corner(board):
             return self.take_opposite_corner(board)
-        elif state.corner_available(board):
+        elif state.corner_available():
             return self.take_corner(board)
-        elif state.edge_available(board):
+        elif state.edge_available():
             return self.take_edge(board)
 
     def _make_opening_ai_move(self, board):
