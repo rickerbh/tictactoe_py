@@ -7,4 +7,3 @@ class HumanPlayer(Player):
         
     def play_notification(self, game_controller):
         self._writer()
-
