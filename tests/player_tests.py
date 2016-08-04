@@ -5,7 +5,7 @@ from tictactoe.game_controller import GameController
 def player_has_play_notification_test():
     result = None
     try:
-        Player("X").play_notification(GameController("X", "O"))
+        Player("X").play_notification(GameController("X", "O", None, None))
     except NotImplementedError as ex:
         result = ex
 

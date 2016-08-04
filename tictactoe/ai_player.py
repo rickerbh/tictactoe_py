@@ -10,5 +10,5 @@ class AIPlayer(Player):
         self._strategy = AIStrategy(symbol, other_symbol)
 
     def play_notification(self, game_controller):
-        game_controller._play(self._symbol, self._strategy.make_move(game_controller._board))
+        game_controller.place_move(self, self._strategy.make_move(game_controller._board))
         
