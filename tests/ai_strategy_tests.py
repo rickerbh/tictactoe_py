@@ -6,7 +6,7 @@ import itertools
 
 def ai_strategy_makes_best_opening_move_test():
     ai = AIStrategy("X", "O")
-    move = ai._make_opening_ai_move(GameBoard())
+    move = ai.make_move(GameBoard())
     result = move in GameBoard().corner_positions
     assert_equal(True, result)
 
@@ -20,16 +20,16 @@ def ai_strategy_responds_to_opening_corner_test():
         board = GameBoard()
         board.play_move("X", move)
         ai = AIStrategy("O", "X")
-        result = ai._make_responding_ai_move(board)
+        result = ai.make_move(board)
         assert_equal(4, result)
     
 def ai_strategy_responds_to_opening_edge_test():
-    board = GameBoard()
-    for move in board.edge_positions:
+    for move in GameBoard().edge_positions:
+        board = GameBoard()
         board.play_move("X", move)
         ai = AIStrategy("O", "X")
-        result = ai._make_responding_ai_move(board)
-        assert_equal(4, result)
+        result = ai.make_move(board)
+        assert_equal(board.center_position, result)
 
 def ai_strategy_responds_to_opening_center_test():
     board = GameBoard()
