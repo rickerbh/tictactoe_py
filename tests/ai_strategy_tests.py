@@ -1,6 +1,7 @@
 from nose.tools import *
 from tictactoe.ai_strategy import AIStrategy
 from tictactoe.game_board import GameBoard
+from tictactoe.game_state import GameState
 import functools
 import itertools
 
@@ -137,3 +138,21 @@ def ai_strategy_take_edge_test():
         ai = AIStrategy("X", "O")
         move = ai.take_edge(board)
         assert_equal(move, option[3])
+
+def ai_strategy_play_aginst_itself_test():
+    ai = AIStrategy("X", "O")
+    ai2 = AIStrategy("O", "X")
+    board = GameBoard()
+    state = GameState(board)
+    current_player = ai
+    while state.has_winner() == False and GameState(board).is_draw() == False:
+        move = current_player.make_move(board)
+        board.play_move(current_player._symbol, move)
+        if current_player == ai:
+            current_player = ai2
+        else:
+            current_player = ai
+    assert_equal(False, state.has_winner())
+    assert_equal(True, state.is_draw())
+        
+    
