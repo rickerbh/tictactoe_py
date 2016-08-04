@@ -92,7 +92,7 @@ class AIStrategy():
             diagonal = 1
 
     def take_corner(self, board):
-        return board.corners.index("") * (board.corners.index("") + 1)
+        return {0: 0, 1: 2, 2: 6, 3: 8}[board.corners.index("")]
 
     def take_edge(self, board):
         return board.edges.index("") * 2 + 1
