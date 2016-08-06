@@ -123,9 +123,16 @@ def random_corner_test():
     result = GameBoard().random_corner
     assert_equal(True, result in [0, 2, 6, 8])
 
-def block_fork_opportunity_test():
+def block_opposite_fork_opportunity_test():
     board = GameBoard()
     board.play_move("X", 0)
     board.play_move("X", 8)
     board.play_move("O", 4)
-    assert_equal(True, GameState(board).block_fork_opportunity("O"))
+    assert_equal(True, GameState(board).block_opposite_fork_opportunity("O"))
+
+def block_corner_fork_opportunity_test():
+    board = GameBoard()
+    board.play_move("O", 5)
+    board.play_move("X", 4)
+    board.play_move("O", 7)
+    assert_equal(True, GameState(board).block_corner_fork_opportunity("X"))

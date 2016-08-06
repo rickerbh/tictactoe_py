@@ -154,5 +154,88 @@ def ai_strategy_play_aginst_itself_test():
             current_player = ai
     assert_equal(False, state.has_winner())
     assert_equal(True, state.is_draw())
-        
     
+def ai_strategy_play_all_games():
+    ai = AIStrategy("X", "O")
+    games = list(itertools.permutations(range(0, 9)))
+    for game in games:
+        board = GameBoard()
+        state = GameState(board)
+        for move in game:
+            if board.positions[move] == "":
+                board.play_move("O", move)
+                if state.has_winner():
+                    # Human has won
+                    print("Uh oh.\nBoard: {0}\nMoves: {1}".format(board.positions, game))
+                    assert False
+                elif state.is_draw():
+                    # This is OK
+                    assert True
+                    break
+                board.play_move("X", ai.make_move(board))
+                if state.has_winner():
+                    # AI has won
+                    assert True
+                    break
+                elif state.is_draw():
+                    # This is OK
+                    assert True
+                    break
+                
+def ai_strategy_play_all_fail1_test():
+    ai = AIStrategy("X", "O")
+    board = GameBoard()
+    state = GameState(board)
+    game = (0, 4, 6, 1, 3, 2, 5, 7, 8)
+    for move in game:
+        if board.positions[move] == "":
+            print("Human play at {0}".format(move))
+            board.play_move("O", move)
+            if state.has_winner():
+                # Human has won
+                print("Uh oh.\nBoard: {0}\nMoves: {1}".format(board.positions, game))
+                assert False
+            elif state.is_draw():
+                # This is OK
+                assert True
+                break
+            ai_move = ai.make_move(board)
+            print("AI play at {0}".format(ai_move))
+            board.play_move("X", ai_move)
+            if state.has_winner():
+                # AI has won
+                assert True
+                break
+            elif state.is_draw():
+                # This is OK
+                assert True
+                break
+
+def ai_strategy_play_all_fail2_test():
+    ai = AIStrategy("X", "O")
+    board = GameBoard()
+    state = GameState(board)
+    game = (5, 4, 7, 0, 8, 2, 1, 3, 6)
+    for move in game:
+        if board.positions[move] == "":
+            print("Human play at {0}".format(move))
+            board.play_move("O", move)
+            if state.has_winner():
+                # Human has won
+                print("Uh oh.\nBoard: {0}\nMoves: {1}".format(board.positions, game))
+                assert False
+            elif state.is_draw():
+                # This is OK
+                assert True
+                break
+            ai_move = ai.make_move(board)
+            print("AI play at {0}".format(ai_move))
+            board.play_move("X", ai_move)
+            if state.has_winner():
+                # AI has won
+                assert True
+                break
+            elif state.is_draw():
+                # This is OK
+                assert True
+                break

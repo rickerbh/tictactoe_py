@@ -18,12 +18,14 @@ class AIStrategy():
             return self._make_opening_ai_move(board)
         elif moves == len(positions) - 1:
             return self._make_responding_ai_move(board)
-        elif moves == len(positions) - 3 and state.block_fork_opportunity(self._symbol):
-            return self.take_edge(board)
         elif state.win_available(self._symbol):
             return self.take_win(board)
         elif state.win_available(self._other_symbol):
             return self.block_loss(board)
+        elif moves == len(positions) - 3 and state.block_opposite_fork_opportunity(self._symbol):
+            return self.take_edge(board)
+        elif moves == len(positions) - 3 and state.block_corner_fork_opportunity(self._symbol):
+            return self.take_corner_fork_block(self._symbol, board)
         elif self.should_take_opposite_corner(board):
             return self.take_opposite_corner(board)
         elif state.corner_available():
@@ -96,3 +98,19 @@ class AIStrategy():
 
     def take_edge(self, board):
         return board.edges.index("") * 2 + 1
+
+    def take_corner_fork_block(self, symbol, board):
+        edges = board.edges
+        blocking_moves = {0: (0, 1), 2: (0, 2), 6: (1, 3), 8: (2, 3)}
+
+        def is_other_symbol(position):
+            return position != "" and position != symbol
+
+        def find_fork(pair):
+            first = pair[0]
+            second = pair[1]
+            return is_other_symbol(edges[first]) and is_other_symbol(edges[second])
+
+        for move in blocking_moves:
+            if find_fork(blocking_moves[move]):
+                return move
