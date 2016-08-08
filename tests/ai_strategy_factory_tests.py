@@ -13,6 +13,12 @@ def factory_returns_easy_strategy_test():
     strategy = factory.strategy("Easy", "X", "O")
     assert isinstance(strategy, Easy)
     
+def factory_returns_easy_strategy_case_insensitive_test():
+    factory = AIStrategyFactory()
+    strategy = factory.strategy("eAsY", "X", "O")
+    assert isinstance(strategy, Easy)
+    
+
 def factory_handles_bad_strategy_test():
     factory = AIStrategyFactory()
     ex = None
