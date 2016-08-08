@@ -13,3 +13,23 @@ def factory_returns_easy_strategy_test():
     strategy = factory.strategy("Easy", "X", "O")
     assert isinstance(strategy, Easy)
     
+def factory_handles_bad_strategy_test():
+    factory = AIStrategyFactory()
+    ex = None
+    try:
+        strategy = factory.strategy("NoStrategyHereSorry", None, None)
+    except Exception as e:
+        ex = e
+
+    assert isinstance(ex, ValueError)
+
+def factor_handles_no_strategy_test():
+    factory = AIStrategyFactory()
+    ex = None
+    try:
+        strategy = factory.strategy(None, None, None)
+    except Exception as e:
+        ex = e
+
+    assert isinstance(ex, ValueError)
+    
