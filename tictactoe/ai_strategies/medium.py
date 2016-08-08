@@ -10,8 +10,7 @@ class Medium(AIStrategy):
         self._hard = Hard(self._symbol, self._other_symbol)
 
     def make_move(self, board):
-        move = None
-        if random.randint(0, 4) % 4 == 0:
+        if random.randint(0, 3) % 4 == 0:
             return self._easy.make_move(board)
         return self._hard.make_move(board)
     
