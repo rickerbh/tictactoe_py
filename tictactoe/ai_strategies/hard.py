@@ -1,11 +1,11 @@
+from tictactoe.ai_strategies.ai_strategy import AIStrategy
 from tictactoe.game_state import GameState
 import functools
 
-class AIStrategy():
+class Hard(AIStrategy):
     def __init__(self, symbol, other_symbol):
-        self._symbol = symbol
-        self._other_symbol = other_symbol
-    
+        AIStrategy.__init__(self, symbol, other_symbol)
+        
     def make_move(self, board):
         def is_empty(item):
             return item == ""
@@ -45,7 +45,7 @@ class AIStrategy():
     def take_win(self, board):
         is_winnable = functools.partial(GameState(board).is_winnable, self._symbol)
         return self.complete_row(board, is_winnable)
-        
+    
     def complete_row(self, board, take_determinator):
         offset = 0
         for items in board.rows:
@@ -67,7 +67,7 @@ class AIStrategy():
                 else:
                     return items.index("") * 2 + 2
             diagonal = 1       
-    
+                
     def block_loss(self, board):
         is_loseable = functools.partial(GameState(board).is_winnable, self._other_symbol)
         return self.complete_row(board, is_loseable)
@@ -80,17 +80,13 @@ class AIStrategy():
 
     def take_opposite_corner(self, board):
         diagonal = 0
+        result_mapping = {0: [8, 0], 1: [6, 2]}
         for items in board.diagonals:
+            option = diagonal
             if items[0] == self._other_symbol and items[2] == "":
-                if diagonal == 0:
-                    return 8
-                else:
-                    return 6
+                return result_mapping[option][0]
             elif items[2] == self._other_symbol and items[0] == "":
-                if diagonal == 0:
-                    return 0
-                else:
-                    return 2
+                return result_mapping[option][1]
             diagonal = 1
 
     def take_corner(self, board):
