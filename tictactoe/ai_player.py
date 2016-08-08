@@ -11,4 +11,11 @@ class AIPlayer(Player):
 
     def play_notification(self, game_controller):
         game_controller.place_move(self, self._strategy.make_move(game_controller._board))
-        
+
+    @property
+    def strategy(self):
+        return self._strategy
+
+    @strategy.setter
+    def strategy(self, value):
+        self._strategy = value

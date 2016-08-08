@@ -2,6 +2,7 @@
 
 import cmd
 from tictactoe.ai_player import AIPlayer
+from tictactoe.ai_strategy_factory import AIStrategyFactory
 from tictactoe.human_player import HumanPlayer
 from tictactoe.game_controller import GameController
 from tictactoe.board_stringification import BoardStringification
@@ -74,7 +75,15 @@ class CommandLineTicTacToe(cmd.Cmd):
 
     def help_human_start(self):
         print("Initiate a new game where the AI starts")
-        
+
+    def do_set_difficulity(self, args):
+        factory = AIStrategyFactory()
+        strategy = factory.strategy(args, self._ai._symbol, self._human._symbol)
+        self._ai.strategy = strategy
+
+    def help_set_difficulity(self):
+        print("Set the game difficulity")
+    
     def _notify_move(self):
         print("Human, your move:\n")
         self._print_board()
