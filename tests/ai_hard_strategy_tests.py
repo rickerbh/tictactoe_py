@@ -105,7 +105,6 @@ def hard_strategy_should_play_in_opposite_corner_test():
         board.play_move("X", board.center_position)
         board.play_move("O", corner)
         ai = Hard("X", "O")
-        print("Placed in {0}".format(corner))
         assert_equal(True, ai.should_take_opposite_corner(board))
 
 def hard_strategy_should_take_opposite_corner_test():
@@ -116,8 +115,6 @@ def hard_strategy_should_take_opposite_corner_test():
             board.play_move("O", option[0])
             board.play_move("X", 4)
             ai = Hard("X", "O")
-            print("Board: {0}".format(board.positions))
-            print("Played {0}, response should be {1}".format(option[0], option[1]))
             assert_equal(option[1], ai.take_opposite_corner(board))
 
 def hard_strategy_take_corner_test():
