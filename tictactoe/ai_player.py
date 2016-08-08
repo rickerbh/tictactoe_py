@@ -1,6 +1,6 @@
 import functools
 import random
-from tictactoe.ai_strategy import AIStrategy
+from tictactoe.ai_strategies.ai_strategy import AIStrategy
 from tictactoe.player import Player
 
 class AIPlayer(Player):

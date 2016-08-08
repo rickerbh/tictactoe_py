@@ -1,5 +1,5 @@
 from nose.tools import *
-from tictactoe.ai_strategy import AIStrategy
+from tictactoe.ai_strategies.ai_strategy import AIStrategy
 from tictactoe.game_board import GameBoard
 from tictactoe.game_state import GameState
 import functools
