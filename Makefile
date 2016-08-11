@@ -5,4 +5,4 @@ watch:
 	nosy
 
 test_game:
-	nosetests tests/ai_strategy_tests.py:ai_strategy_play_all_games
+	nosetests tests/ai_hard_strategy_tests.py:play_all_games
