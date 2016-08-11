@@ -2,7 +2,7 @@ from nose.tools import *
 from tictactoe.ai_strategies.medium import Medium
 from tictactoe.game_board import GameBoard
 
-def medium_strategy_makes_any_opening_move_test():
+def makes_any_opening_move_test():
     ai = Medium("X", "O")
     board = GameBoard()
     move = ai.make_move(board)

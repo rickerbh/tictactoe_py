@@ -2,13 +2,13 @@ from nose.tools import *
 from tictactoe.ai_strategies.easy import Easy
 from tictactoe.game_board import GameBoard
 
-def easy_strategy_makes_any_opening_move_test():
+def makes_any_opening_move_test():
     ai = Easy("X", "O")
     board = GameBoard()
     move = ai.make_move(board)
     assert_equal(True, move in list(range(0, 9)))
 
-def easy_strategy_makes_move_in_nearly_full_board_test():
+def makes_move_in_nearly_full_board_test():
     ai = Easy("X", "O")
     board = GameBoard()
     board.play_move("X", 0)
